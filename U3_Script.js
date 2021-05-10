@@ -2,21 +2,14 @@
 "use strict"
 
 // Please integrate your personal openweathermap API key by saving it in the following variable:
-var personalAPIkey = '8b12a89947954694a8d54881188c2aee';
-
+var personalAPIkey = '';
 
 
 //defining variables
 
 var coordinates
 
-
-
-/**
- * Function to get the current position.
- * @returns {Array} longitude, latitude
- */
-
+//defining functions
 
 
   function success(position) {
@@ -39,7 +32,7 @@ var coordinates
 
       navigator.geolocation.getCurrentPosition(success, error)
       console.log(coordinates)
-      
+
 
       let xmlreq = new XMLHttpRequest();
 
