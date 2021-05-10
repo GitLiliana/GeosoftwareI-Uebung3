@@ -1,23 +1,24 @@
 // Uebung3 - Geosoftware I
 
 // Please integrate your personal openweathermap API key by saving it in the following variable:
-var personalAPIkey = '';
+var personalAPIkey = '8b12a89947954694a8d54881188c2aee';
 
 
 
 //defining variables
-let coordinates
+let longitude = ""
+let latitude = ""
 let weatherData
 let weatherInformation
-console.log("simon")
+
 
 /**
  * Function to show the weather of the current location on the webpage.
  */
 function showWeather() {
-    coordinates = getPosition()
+    getPosition()
     weatherData = getWeatherData()
-    weatherInformation = convertWeatherData(weatherData)
+    displayWeatherAtPosition()
     document.getElementById("weather").innerHTML = weatherInformation
 }
 
@@ -27,11 +28,11 @@ function showWeather() {
  */
 function getPosition() {
     let status = document.querySelector('#status');
-    let currentPosition = []
 
     function success(position) {
-        currentPosition.push(position.coords.longitude)
-        currentPosition.push(position.coords.latitude)
+        longitude = position.coords.longitude
+        latitude = position.coords.latitude
+        console.log(longitude.type)
 
     }
 
@@ -43,38 +44,38 @@ function getPosition() {
       status.textContent = 'Geolocation is not supported by your browser';
     } else {
         navigator.geolocation.getCurrentPosition(success, error);
-        console.log(currentPosition)
-        return currentPosition
+
     }
   }
 
   /**
    * Function to get a JSON object with information on weather of the selected position.
    * The data is privided by the API by openwaethermap.
-   * @param {Array} - position(lat, long)
    * @returns {JSON} - JSON containig data on weather
    */
   function getWeatherData () {
       const status = document.querySelector('#status');
-      let lon = coordinates[0]
-      let lat = coordinates[1]
-      var weatherJSON = new XMLHttpRequest();
 
-      xhr.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely,hourly,daily&appid="+personalAPIkey);
-      xhr.onload = convertWeatherData(weatherJSON);
-      xhr.send();
-      xhr.onerror = function() {
-        status.textContent = 'Unable to retrieve weather data.';
+      let xmlreq = new XMLHttpRequest();
+
+      xmlreq.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let weatherData = JSON.parse(this.responseText)
+          console.log(weatherData)
+          return weatherData
+        }
       }
-      xhr.onreadystatechange;  //Verstehe den Unterschied zu onload nicht? Warum wichtig? Braucht man beides?
+
+      xmlreq.open("GET", `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,daily&appid=${personalAPIkey}`);
+      xmlreq.send();
   }
 
+
   /**
-   * Function to convert weather data from JSON format into into humanly readable information.
-   * @param {JSON} - JSON containing data on weather
+   * displayWeatherAtPosition - Description
+   *
+   * @param {JSON} weatherData weatherdata in json format
    */
-  function convertWeatherData (WeatherJSON) {
-      //implementation needed
-      weatherJSONString = JSON.stringify(weatherJSON);   //only for testing
-      return weatherJSONString;    //only for testing
+  function displayWeatherAtPosition(weatherData) {
+
   }
