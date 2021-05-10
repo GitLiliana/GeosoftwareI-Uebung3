@@ -11,18 +11,6 @@ var coordinates
 
 //defining functions
 
-
-  function success(position) {
-    coordinates = position.coords
-
-    console.log(coordinates)
-  }
-
-  function error(err) {
-    console.warn(`Warn(${err.code}) : ${err.message}`)
-  }
-
-
   /**
    * Function to get a JSON object with information on weather of the selected position.
    * The data is privided by the API by openwaethermap.
@@ -30,9 +18,8 @@ var coordinates
    */
   function getWeatherData () {
 
-      navigator.geolocation.getCurrentPosition(success, error)
-      console.log(coordinates)
-
+    function success(position) {
+      coordinates = position.coords
 
       let xmlreq = new XMLHttpRequest();
 
@@ -45,6 +32,16 @@ var coordinates
 
       xmlreq.open("GET", `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&exclude=minutely,hourly,daily&appid=${personalAPIkey}`);
       xmlreq.send();
+    }
+
+
+    function error(err) {
+      console.warn(`Warn(${err.code}) : ${err.message}`)
+    }
+
+
+    navigator.geolocation.getCurrentPosition(success, error)
+
   }
 
 
