@@ -1,13 +1,14 @@
 // Uebung3 - Geosoftware I
+"use strict"
 
 // Please integrate your personal openweathermap API key by saving it in the following variable:
-var personalAPIkey = '';
+var personalAPIkey = '8b12a89947954694a8d54881188c2aee';
 
 
 
 //defining variables
 
-
+var coordinates
 
 
 
@@ -15,35 +16,30 @@ var personalAPIkey = '';
  * Function to get the current position.
  * @returns {Array} longitude, latitude
  */
-function getPosition() {
-    let status = document.querySelector('#status');
-    let coordinates
-    function success(position) {
 
-        coordinates = position.coords
-        console.log(coordinates)
 
-    }
 
-    function error() {
-      status.textContent = 'Unable to retrieve your location';
-    }
+  function success(position) {
+    coordinates = position.coords
 
-    if(!navigator.geolocation) {
-      status.textContent = 'Geolocation is not supported by your browser';
-    } else {
-        navigator.geolocation.getCurrentPosition(success, error);
-        getWeatherData(coordinates)
-    }
+    console.log(coordinates)
   }
+
+  function error(err) {
+    console.warn(`Warn(${err.code}) : ${err.message}`)
+  }
+
 
   /**
    * Function to get a JSON object with information on weather of the selected position.
    * The data is privided by the API by openwaethermap.
    * @returns {JSON} - JSON containig data on weather
    */
-  function getWeatherData (coordinates) {
-      const status = document.querySelector('#status');
+  function getWeatherData () {
+
+      navigator.geolocation.getCurrentPosition(success, error)
+      console.log(coordinates)
+      
 
       let xmlreq = new XMLHttpRequest();
 
@@ -66,4 +62,14 @@ function getPosition() {
    */
   function displayWeatherAtPosition(weatherData) {
       console.log(weatherData)
+  }
+
+
+
+  /**
+   * start - "runner"-function. starts when the html button is pressed
+   *
+   */
+  function start() {
+    getWeatherData()
   }
