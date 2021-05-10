@@ -1,41 +1,50 @@
 // Uebung3 - Geosoftware I
 
 // Please integrate your personal openweathermap API key by saving it in the following variable:
-var personalAPIkey = '';
+var personalAPIkey = '8b12a89947954694a8d54881188c2aee';
+
+
+
+//defining variables
+let coordinates
+let weatherData
+let weatherInformation
+console.log("simon")
 
 /**
  * Function to show the weather of the current location on the webpage.
  */
 function showWeather() {
-    var weatherInformation = convertWeatherData(getWeatherData(getPosition()));
-    document.getElementById("weather").innerHTML = weatherInformation;
+    coordinates = getPosition()
+    weatherData = getWeatherData()
+    weatherInformation = convertWeatherData(weatherData)
+    document.getElementById("weather").innerHTML = weatherInformation
 }
 
 /**
- * Function to get the current position (latitude, longitude).
- * @returns {Array} latitude, longitude
+ * Function to get the current position.
+ * @returns {Array} longitude, latitude
  */
 function getPosition() {
-    const status = document.querySelector('#status');
+    let status = document.querySelector('#status');
+    let currentPosition = []
 
     function success(position) {
-        var longitude = position.coords.longitude;
-        var latitude  = position.coords.latitude;
-        var currentPosition = [longitude, latitude];
-        document.getElementById("Ausgabe").innerHTML = currentPosition;   //zum Testen: funktioniert
-        return currentPosition;
+        currentPosition.push(position.coords.longitude)
+        currentPosition.push(position.coords.latitude)
+
     }
-  
+
     function error() {
       status.textContent = 'Unable to retrieve your location';
     }
-  
+
     if(!navigator.geolocation) {
       status.textContent = 'Geolocation is not supported by your browser';
     } else {
         navigator.geolocation.getCurrentPosition(success, error);
-        document.getElementById("Ausgabe2").innerHTML = currentPosition;  //zum Testen: funktioniert nicht
-        return currentPosition;
+        console.log(currentPosition)
+        return currentPosition
     }
   }
 
@@ -45,11 +54,12 @@ function getPosition() {
    * @param {Array} - position(lat, long)
    * @returns {JSON} - JSON containig data on weather
    */
-  function getWeatherData (Position) {
+  function getWeatherData () {
       const status = document.querySelector('#status');
-      var lat = Position [0];
-      var lon = Position [1];
+      let lon = coordinates[0]
+      let lat = coordinates[1]
       var weatherJSON = new XMLHttpRequest();
+
       xhr.open("GET", "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=minutely,hourly,daily&appid="+personalAPIkey);
       xhr.onload = convertWeatherData(weatherJSON);
       xhr.send();
@@ -68,5 +78,3 @@ function getPosition() {
       weatherJSONString = JSON.stringify(weatherJSON);   //only for testing
       return weatherJSONString;    //only for testing
   }
-
-
