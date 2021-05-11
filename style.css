@@ -8,14 +8,19 @@ h1 {
 .introduction {
   background-color: #E6E8F3;
   font-size: 20pt;
+  padding: 8pt;
 }
 button {
   font-size: 16pt;
+  padding: 2pt;
 }
 .form1 {
   background-color: #E6E8F3;
 }
 .ausgabe {
-  color: rgb(75,74,59);
+  color: #2B14BF;
+  font-weight: bold;
   font-size: 14pt;
+  text-align: center;
+
 }
