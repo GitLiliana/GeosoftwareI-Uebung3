@@ -13,8 +13,7 @@ var coordinates
 
   /**
    * Function to get a JSON object with information on weather of the selected position.
-   * The data is privided by the API by openwaethermap.
-   * @returns {JSON} - JSON containig data on weather
+   * The data is provided by the API by openwaethermap.
    */
   function getWeatherData () {
 
@@ -39,9 +38,7 @@ var coordinates
       console.warn(`Warn(${err.code}) : ${err.message}`)
     }
 
-
     navigator.geolocation.getCurrentPosition(success, error)
-
   }
 
 
@@ -51,7 +48,38 @@ var coordinates
    * @param {JSON} weatherData weatherdata in json format
    */
   function displayWeatherAtPosition(weatherData) {
-      console.log(weatherData)
+      //prints given location
+      document.getElementById("location").textContent = "Your location: " + weatherData.lat + " " + weatherData.lon
+
+      //prints given date
+      const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}
+      let date = new Date(weatherData.current.dt * 1000).toLocaleDateString("EN-EN", options)
+      document.getElementById("date").textContent = "Date: " + date
+
+      //prints weather
+      document.getElementById("weather").textContent = "Weather: " + weatherData.current.weather[0].main + " description: " + weatherData.current.weather[0].description
+
+      //prints current temperature
+      let temp = weatherData.current.temp
+      let tempK = Math.round(temp)
+      let tempC = Math.round(temp - 273.15)
+      document.getElementById("temperature").textContent = "Current temperature: " + tempK +"K/" + tempC + "°C"
+
+      //prints feel-like temperature
+      let feellike = weatherData.current.feels_like
+      let feellikeK = Math.round(feellike)
+      let feellikeC = Math.round(feellike - 273.15)
+      document.getElementById("feellike").textContent = "Feels like: " + feellikeK + "K/" + feellikeC + "°C"
+
+      //prints humidity
+      document.getElementById("humidity").textContent = "Humidity: " + weatherData.current.humidity + "%"
+      //prints pressure
+      document.getElementById("pressure").textContent = "Pressure at Sealevel: " + weatherData.current.pressure + " hPa"
+
+
+
+
+      console.log(weatherData) // testing
   }
 
 
