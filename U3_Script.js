@@ -82,7 +82,7 @@ var coordinates // coordinates holds the coordinates of the requested position
       const options2 = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
       let sunrise = new Date(weatherData.current.sunrise * 1000).toLocaleTimeString("EN-EN", options2);
       let sunset = new Date(weatherData.current.sunset * 1000).toLocaleTimeString("EN-EN", options2);
-      document.getElementById("sunriseandset").textContent = "Sunrise: " + sunrise + "<br>Sunset: " + sunset;
+      document.getElementById("sunriseandset").innerHTML = "Sunrise: " + sunrise + "<br>Sunset: " + sunset;
 
 
       console.log(weatherData); // testing
