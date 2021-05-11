@@ -2,7 +2,7 @@
 "use strict"
 
 // Please integrate your personal openweathermap API key by saving it in the following variable:
-var personalAPIkey = '';
+var personalAPIkey = '8b12a89947954694a8d54881188c2aee';
 
 
 //defining variables
@@ -57,7 +57,7 @@ var coordinates
       document.getElementById("date").textContent = "Date: " + date
 
       //prints weather
-      document.getElementById("weather").textContent = "Weather: " + weatherData.current.weather[0].main + " description: " + weatherData.current.weather[0].description
+      document.getElementById("weather").innerHTML = "Weather: " + weatherData.current.weather[0].main + "<br>Description: " + weatherData.current.weather[0].description
 
       //prints current temperature
       let temp = weatherData.current.temp
