@@ -8,14 +8,14 @@ var coordinates // coordinates holds the coordinates of the requested position
 //defining functions
 
   /**
-   * Function to get a JSON object with information on weather of the selected position.
+   * Function to get a JSON object with information on weather of the current position.
    * The data is provided by the API by openwaethermap.
    */
   function getWeatherData () {
 
     //success function when accessing position is accepted
     function success(position) {
-      coordinates = position.coords
+      coordinates = position.coords;
 
       let xmlreq = new XMLHttpRequest();
 
@@ -23,8 +23,8 @@ var coordinates // coordinates holds the coordinates of the requested position
       //parsing it to JSON and invoking displayWeatherAtPosition()
       xmlreq.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          let weatherData = JSON.parse(this.responseText)
-          displayWeatherAtPosition(weatherData)
+          let weatherData = JSON.parse(this.responseText);
+          displayWeatherAtPosition(weatherData);
         }
       }
 
@@ -34,21 +34,20 @@ var coordinates // coordinates holds the coordinates of the requested position
 
     // Error function when accessing position is denied
     function error(err) {
-      console.warn(`Warn(${err.code}) : ${err.message}`)
+      console.warn(`Warn(${err.code}) : ${err.message}`);
     }
     // getting the position from the geolocation api
-    navigator.geolocation.getCurrentPosition(success, error)
+    navigator.geolocation.getCurrentPosition(success, error);
   }
 
 
   /**
-   * displayWeatherAtPosition - Description
-   *
-   * @param {JSON} weatherData weatherdata in json format
+   * Function to display weather at the current location in a comprehensible way.
+   * @param {JSON} weatherData - weatherdata in json format
    */
   function displayWeatherAtPosition(weatherData) {
       //prints given location
-      document.getElementById("location").textContent = "Your location: Lat:" + weatherData.lat + ", Lon:" + weatherData.lon
+      document.getElementById("location").textContent = "Your location: Lat:" + weatherData.lat + ", Lon:" + weatherData.lon;
 
       //prints given date
       const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}
@@ -64,11 +63,11 @@ var coordinates // coordinates holds the coordinates of the requested position
       let tempC = Math.round(temp - 273.15)
       document.getElementById("temperature").textContent = "Current temperature: " + tempK +"K/" + tempC + "°C"
 
-      //prints feel-like temperature
-      let feellike = weatherData.current.feels_like
-      let feellikeK = Math.round(feellike)
-      let feellikeC = Math.round(feellike - 273.15)
-      document.getElementById("feellike").textContent = "Feels like: " + feellikeK + "K/" + feellikeC + "°C"
+      //prints feels-like temperature
+      let feelslike = weatherData.current.feels_like
+      let feelslikeK = Math.round(feelslike)
+      let feelslikeC = Math.round(feelslike - 273.15)
+      document.getElementById("feelslike").textContent = "Felt air temperature: " + feelslikeK + "K/" + feelslikeC + "°C"
 
       //prints windspeed
       document.getElementById("windspeed").textContent = "Windspeed: " + weatherData.current.wind_speed + "meter/sec"
@@ -91,8 +90,8 @@ var coordinates // coordinates holds the coordinates of the requested position
 
 
   /**
-   * start - "runner"-function. starts when the html button is pressed
-   *
+   * Function to run the function getWeatherData().
+   * It starts when the html button is clicked.
    */
   function start() {
     getWeatherData()
