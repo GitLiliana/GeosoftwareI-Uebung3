@@ -50,41 +50,42 @@ var coordinates // coordinates holds the coordinates of the requested position
       document.getElementById("location").textContent = "Your location: Lat:" + weatherData.lat + ", Lon:" + weatherData.lon;
 
       //prints given date
-      const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}
-      let date = new Date(weatherData.current.dt * 1000).toLocaleDateString("EN-EN", options)
-      document.getElementById("date").textContent = "Date: " + date
+      const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+      let date = new Date(weatherData.current.dt * 1000).toLocaleDateString("EN-EN", options);
+      document.getElementById("date").textContent = "Date: " + date;
 
       //prints weather
-      document.getElementById("weather").innerHTML = "Weather: " + weatherData.current.weather[0].main + "<br>Description: " + weatherData.current.weather[0].description
+      document.getElementById("weather").innerHTML = "Weather: " + weatherData.current.weather[0].main + "<br>Description: " + weatherData.current.weather[0].description;
 
       //prints current temperature
-      let temp = weatherData.current.temp
-      let tempK = Math.round(temp)
-      let tempC = Math.round(temp - 273.15)
-      document.getElementById("temperature").textContent = "Current temperature: " + tempK +"K/" + tempC + "°C"
+      let temp = weatherData.current.temp;
+      let tempK = Math.round(temp);
+      let tempC = Math.round(temp - 273.15);
+      document.getElementById("temperature").textContent = "Current temperature: " + tempK +"K/" + tempC + "°C";
 
-      //prints feels-like temperature
-      let feelslike = weatherData.current.feels_like
-      let feelslikeK = Math.round(feelslike)
-      let feelslikeC = Math.round(feelslike - 273.15)
-      document.getElementById("feelslike").textContent = "Felt air temperature: " + feelslikeK + "K/" + feelslikeC + "°C"
+      //prints felt air temperature
+      let feelslike = weatherData.current.feels_like;
+      let feelslikeK = Math.round(feelslike);
+      let feelslikeC = Math.round(feelslike - 273.15);
+      document.getElementById("feelslike").textContent = "Felt air temperature: " + feelslikeK + "K/" + feelslikeC + "°C";
 
       //prints windspeed
-      document.getElementById("windspeed").textContent = "Windspeed: " + weatherData.current.wind_speed + "meter/sec"
+      document.getElementById("windspeed").textContent = "Windspeed: " + weatherData.current.wind_speed + "meter/sec";
 
       //prints humidity
-      document.getElementById("humidity").textContent = "Humidity: " + weatherData.current.humidity + "%"
+      document.getElementById("humidity").textContent = "Humidity: " + weatherData.current.humidity + "%";
+    
       //prints pressure
-      document.getElementById("pressure").textContent = "Pressure at Sealevel: " + weatherData.current.pressure + " hPa"
+      document.getElementById("pressure").textContent = "Pressure at Sealevel: " + weatherData.current.pressure + " hPa";
 
       //prints sunrise and sunset
-      const options2 = {hour: 'numeric', minute: 'numeric', second: 'numeric'}
-      let sunrise = new Date(weatherData.current.sunrise * 1000).toLocaleTimeString("EN-EN", options2)
-      let sunset = new Date(weatherData.current.sunset * 1000).toLocaleTimeString("EN-EN", options2)
-      document.getElementById("sunriseandset").textContent = "Sunrise: " + sunrise + " Sunset: " + sunset
+      const options2 = {hour: 'numeric', minute: 'numeric', second: 'numeric'};
+      let sunrise = new Date(weatherData.current.sunrise * 1000).toLocaleTimeString("EN-EN", options2);
+      let sunset = new Date(weatherData.current.sunset * 1000).toLocaleTimeString("EN-EN", options2);
+      document.getElementById("sunriseandset").textContent = "Sunrise: " + sunrise + " Sunset: " + sunset;
 
 
-      console.log(weatherData) // testing
+      console.log(weatherData); // testing
   }
 
 
@@ -94,5 +95,5 @@ var coordinates // coordinates holds the coordinates of the requested position
    * It starts when the html button is clicked.
    */
   function start() {
-    getWeatherData()
+    getWeatherData();
   }
