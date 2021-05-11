@@ -1,6 +1,6 @@
 # GeosoftwareI-Uebung3
 
-Einbinden des APIkeys:
+Integration of APIkey:
 
 1. Create a javascript-file with the name: apikey.js
 2. Insert the following row: var personalAPIkey = ""
